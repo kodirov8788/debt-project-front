@@ -1,0 +1,34 @@
+.Navbar {
+    width: 100%;
+    height: 60px;
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: aliceblue;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+.logo {
+    font-family: "Tilt Prism", cursive;
+    font-size: 18px;
+    cursor: pointer;
+}
+.links ul {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+}
+.links ul li {
+    list-style: none;
+}
+.links a {
+    text-decoration: none;
+    /* transition: 10s; */
+    color: black;
+    font-weight: 700;
+    font-size: 22px;
+    font-family: "Tilt Prism", cursive;
+}
+.links a:hover {
+    border-bottom: 2px solid gray;
+}
