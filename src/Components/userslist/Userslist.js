@@ -30,11 +30,10 @@ function Userslist() {
     }
     return (
         <ul>
-            <LoadingSpinner boolean={isLoading} />
             {
                 data.map(user => (
 
-                    <li>ismi: {user.name}, qolgan qarzi: <span style={{ color: "red" }}>{user.qarz}</span>
+                    <li key={user._id}>ismi: {user.name}, qolgan qarzi: <span style={{ color: "red" }}>{user.qarz}</span>
 
                         <div className=""> <Link to={`/qarzdor/${user._id}`}>Taxrirlash </Link> || <button onClick={() => deleteuser(user._id)}>delete</button></div> </li>
 
