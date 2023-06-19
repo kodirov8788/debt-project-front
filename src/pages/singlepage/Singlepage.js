@@ -71,25 +71,26 @@ function Singlepage() {
                 </div>
                 <div className="single_container">
                     {
-                        user.comments?.map(comment => (<>
-                            {comment.operation === "plus" ?
-                                <div key={comment._id} className="singlepage_plus">
-                                    <h2>Qo`shilgan miqdor:{comment.amount}so`m</h2>
+                        user.comments?.map(comment => (
+                            <div key={comment._id}>
+                                {comment.operation === "plus" ?
+                                    <div className="singlepage_plus">
+                                        <h2>Qo`shilgan miqdor:{comment.amount}so`m</h2>
 
-                                    <p>{comment.info}</p>
-                                    <span>{(new Date((comment.updatedAt)).toDateString()) + " " + (new Date((comment.updatedAt)).toLocaleTimeString())}</span>
-                                </div>
-                                :
-                                <div key={comment._id} className="singlepage_minus">
-                                    <h2>ayirilgan miqdor:{comment.amount}so`m</h2>
+                                        <p>{comment.info}</p>
+                                        <span>{(new Date((comment.updatedAt)).toDateString()) + " " + (new Date((comment.updatedAt)).toLocaleTimeString())}</span>
+                                    </div>
+                                    :
+                                    <div className="singlepage_minus">
+                                        <h2>ayirilgan miqdor:{comment.amount}so`m</h2>
 
-                                    <p>{comment.info}</p>
-                                    <span>{(new Date((comment.updatedAt)).toDateString()) + " " + (new Date((comment.updatedAt)).toLocaleTimeString())}</span>
-                                </div>
-                            }
+                                        <p>{comment.info}</p>
+                                        <span>{(new Date((comment.updatedAt)).toDateString()) + " " + (new Date((comment.updatedAt)).toLocaleTimeString())}</span>
+                                    </div>
+                                }
 
 
-                        </>))
+                            </div>))
 
                     }
                 </div>
