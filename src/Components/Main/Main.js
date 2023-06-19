@@ -7,12 +7,10 @@ import Forms from '../form/Forms';
 function Main() {
     return (
         <div className='Main'>
-            <div className="left">
-                <div className="plas">
-                    <Forms />
-                </div>
-                <Userslist />
+            <div className="plas">
+                <Forms />
             </div>
+            <Userslist />
         </div>
     )
 }

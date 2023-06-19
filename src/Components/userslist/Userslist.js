@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import "./Userslist.css"
 import Axios from '../../api/api'
 import { Link } from 'react-router-dom'
-import LoadingSpinner from '../loaderSpinner/LoaderSpinner'
 import { UserContext } from '../../context/UserContext'
 
 function Userslist() {
@@ -11,7 +10,7 @@ function Userslist() {
 
 
 
-    console.log(data)
+    console.log(isLoading)
     useEffect(() => {
         const getApi = async () => {
             await Axios.get("/users/get")
@@ -22,20 +21,36 @@ function Userslist() {
     }, [isLoading])
 
     const deleteuser = async (id) => {
-        setIsLoading(true)
-        await Axios.delete(`/users/delete/${id}`)
-            .then((res) => console.log(res))
-            .catch((error) => console.log("error bor"))
-        setIsLoading(false)
-    }
+        setIsLoading(true);
+        try {
+            const response = await Axios.delete(`/users/delete/${id}`);
+            console.log(response.data); // Assuming the server sends a response with the deleted user information
+        } catch (error) {
+            console.error(error);
+            console.log("Error occurred while deleting user");
+        }
+        setIsLoading(false);
+    };
     return (
-        <ul>
+        <ul className='userlist'>
             {
                 data.map(user => (
 
-                    <li key={user._id}>ismi: {user.name}, qolgan qarzi: <span style={{ color: "red" }}>{user.qarz}</span>
+                    <li key={user._id}>
+                        <div className="list_left">
+                            <span>ismi: <b>{user.name}</b></span>
+                            <span >qolgan qarzi: <b style={{ color: "red" }}> {user.qarz}</b></span>
 
-                        <div className=""> <Link to={`/qarzdor/${user._id}`}>Taxrirlash </Link> || <button onClick={() => deleteuser(user._id)}>delete</button></div> </li>
+                        </div>
+
+                        <div className="list_right">
+                            <Link className='link' to={`/qarzdor/${user._id}`}>Taxrirlash </Link>
+                            <a href={`tel:${user.number}`}>tel: {user.number}</a>
+                            <button onClick={() => deleteuser(user._id)}>delete</button>
+                        </div>
+
+
+                    </li>
 
 
                 ))
