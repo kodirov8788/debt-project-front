@@ -5,31 +5,36 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../context/UserContext'
 
 function Userslist() {
-    const [data, setData] = useState([])
-    const { isLoading, setIsLoading } = useContext(UserContext)
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const { setIsLoading: setContextIsLoading } = useContext(UserContext);
 
-
-
-    console.log(isLoading)
     useEffect(() => {
-        const getApi = async () => {
-            await Axios.get("/users/get")
-                .then((res) => setData(res.data))
-                .catch((error) => console.log("error bor"))
-        }
-        getApi()
-    }, [isLoading])
+        const fetchData = async () => {
+            setIsLoading(true);
+            try {
+                const response = await Axios.get('/users/get');
+                setData(response.data);
+            } catch (error) {
+                console.error(error);
+                console.log('Error occurred while fetching data');
+            }
+            setIsLoading(false);
+        };
 
-    const deleteuser = async (id) => {
-        setIsLoading(true);
+        fetchData();
+    }, [isLoading]);
+
+    const deleteUser = async (id) => {
+        setContextIsLoading(true);
         try {
             const response = await Axios.delete(`/users/delete/${id}`);
             console.log(response.data); // Assuming the server sends a response with the deleted user information
         } catch (error) {
             console.error(error);
-            console.log("Error occurred while deleting user");
+            console.log('Error occurred while deleting user');
         }
-        setIsLoading(false);
+        setContextIsLoading(false);
     };
     return (
         <ul className='userlist'>
@@ -46,7 +51,7 @@ function Userslist() {
                         <div className="list_right">
                             <Link className='link' to={`/qarzdor/${user._id}`}>Taxrirlash </Link>
                             <a href={`tel:${user.number}`}>tel: {user.number}</a>
-                            <button onClick={() => deleteuser(user._id)}>delete</button>
+                            <button onClick={() => deleteUser(user._id)}>delete</button>
                         </div>
 
 

@@ -1,7 +1,7 @@
 import Axios from '../../api/api'
 import React, { useContext } from 'react'
 import { UserContext } from '../../context/UserContext'
-
+import "./Form.css"
 function Forms() {
     const { isLoading, setIsLoading } = useContext(UserContext)
     const sendForm = async (e) => {
@@ -29,7 +29,7 @@ function Forms() {
     }
 
     return (
-        <form action="" onSubmit={sendForm}>
+        <form className='form' action="" onSubmit={sendForm}>
             <div className="textm">
                 <h3>Qarz qo'shish:</h3>
             </div>

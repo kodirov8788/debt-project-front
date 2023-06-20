@@ -3,10 +3,10 @@ import "./spinner.css";
 
 function LoadingSpinner({ boolean }) {
     return (
-        <div className="spinner-container">
-            <div className={boolean === true ? "loading-spinner" : ""}>
+        <div style={boolean === false ? { display: "none" } : { display: "flex" }} className="spinner-container">
+            <div className="loading-spinner" >
             </div>
-        </div>
+        </div >
     );
 }
 export default LoadingSpinner
