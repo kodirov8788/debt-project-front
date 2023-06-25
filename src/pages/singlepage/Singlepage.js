@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 function Singlepage() {
     const { id } = useParams()
-    const { isLoading, setIsLoading } = useContext(AuthContext)
+    const { isLoading, setIsLoading, sensor, setSensor } = useContext(AuthContext)
     const { user } = useAuthContext()
     const [ayiruvQiymat, setAyiruvQiymat] = useState({
         qarz: 0,
@@ -22,23 +22,27 @@ function Singlepage() {
     console.log(userData)
     const getApi = async () => {
         setIsLoading(true)
-        await Axios.get("/client/get", {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-        })
-            .then((res) => {
-                setUserData(res.data.find(us => us._id === id))
-                setIsLoading(false)
+        if (user) {
+            await Axios.get("/client/get", {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             })
-            .catch((error) => console.log("error bor"))
+                .then((res) => {
+                    setUserData(res.data.find(us => us._id === id))
+                    setIsLoading(false)
+                })
+                .catch((error) => console.log("error bor"))
+        }
+
     }
     useEffect(() => {
         getApi()
-    }, [user])
+    }, [user, sensor])
 
 
     const ayirish = async () => {
+        setSensor(false)
         setIsLoading(true)
         await Axios.put(`/client/minus/${id}`, ayiruvQiymat, {
             headers: {
@@ -48,11 +52,13 @@ function Singlepage() {
             .then(res => console.log(res))
             .catch((error) => console.log("error bor", error))
         setIsLoading(false)
-        window.location.reload()
-
+        setSensor(true)
+        setQoshuvQiymat({ ...qoshuvQiymat, qarz: 0, info: "" })
+        setAyiruvQiymat({ ...qoshuvQiymat, qarz: 0, info: "" })
     }
 
     const qoshish = async () => {
+        setSensor(false)
         setIsLoading(true)
         await Axios.put(`/client/plus/${id}`, qoshuvQiymat, {
             headers: {
@@ -62,19 +68,27 @@ function Singlepage() {
             .then(res => console.log(res))
             .catch((error) => console.log("error bor", error))
         setIsLoading(false)
-        window.location.reload()
+        setSensor(true)
+        setQoshuvQiymat({ ...qoshuvQiymat, qarz: "", info: "" })
+        setAyiruvQiymat({ ...qoshuvQiymat, qarz: "", info: "" })
     }
     return (
         <div>
             <div className="singlepage_top">
                 <div className="singlepage_topCover">
-                    <input onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, qarz: Number(e.target.value) })} type="number" placeholder='qarzdan yechish' />
-                    <input type="text" placeholder='nima oldi?' onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, info: e.target.value })} />
+                    <input onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, qarz: Number(e.target.value) })} type="number" value={ayiruvQiymat.qarz < 1 ? "" : ayiruvQiymat.qarz} placeholder='qarzdan yechish' />
+
+                    <input type="text" placeholder='nima oldi?' onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, info: e.target.value })} value={ayiruvQiymat.info.length < 1 ? "" : ayiruvQiymat.info} />
+
                     <button onClick={ayirish}>Qarzni yechish</button>
+
                 </div>
                 <div className="singlepage_topCover">
-                    <input onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, qarz: Number(e.target.value) })} type="number" placeholder='qarzga qo`shish' />
-                    <input type="text" placeholder='nima oldi?' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, info: e.target.value })} />
+
+                    <input onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, qarz: Number(e.target.value) })} type="number" value={qoshuvQiymat.qarz < 1 ? "" : qoshuvQiymat.qarz} placeholder='qarzga qo`shish' />
+
+                    <input type="text" placeholder='nima oldi?' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, info: e.target.value })} value={qoshuvQiymat.info.length < 1 ? "" : qoshuvQiymat.info} />
+
                     <button onClick={qoshish}>Qarz qo`shish</button>
                 </div>
             </div>
