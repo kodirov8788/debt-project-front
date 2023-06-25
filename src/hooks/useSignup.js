@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useAuthContext } from './useAuthContext';
 import axios from '../api/api';
+import { AuthContext } from '../context/AuthContext';
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
+  const { isLoading, setIsLoading } = useContext(AuthContext)
+
 
   const signup = async (email, password) => {
     setIsLoading(true);

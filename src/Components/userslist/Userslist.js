@@ -7,8 +7,9 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 
 function Userslist() {
     const [data, setData] = useState([]);
+
     const [isLoading, setIsLoading] = useState(false);
-    const { setIsLoading: setContextIsLoading } = useContext(AuthContext);
+    const { setIsLoading: setContextIsLoading, sensor, setSensor } = useContext(AuthContext);
     const { user } = useAuthContext();
 
     console.log(data);
@@ -21,6 +22,7 @@ function Userslist() {
                     Authorization: `Bearer ${user.token}`,
                 },
             });
+
             setData(response.data);
         } catch (error) {
             console.error(error);
@@ -31,11 +33,11 @@ function Userslist() {
 
     useEffect(() => {
         fetchData();
-    }, [user]);
+    }, [user, sensor]);
 
     const deleteUser = async (id) => {
         setContextIsLoading(true);
-
+        setSensor(false)
         try {
             const response = await Axios.delete(`/client/delete/${id}`, {
                 headers: {
@@ -48,6 +50,8 @@ function Userslist() {
             console.log('Error occurred while deleting user');
         }
         setContextIsLoading(false);
+        setSensor(true)
+
     };
 
     return (

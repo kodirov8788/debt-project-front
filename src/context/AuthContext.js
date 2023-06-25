@@ -15,6 +15,7 @@ export const authReducer = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [sensor, setSensor] = useState(false)
   const [state, dispatch] = useReducer(authReducer, {
     user: null
   })
@@ -30,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   console.log('AuthContext state:', state)
 
   return (
-    <AuthContext.Provider value={{ ...state, dispatch, isLoading, setIsLoading }}>
+    <AuthContext.Provider value={{ ...state, dispatch, isLoading, setIsLoading, sensor, setSensor }}>
       {children}
     </AuthContext.Provider>
   )

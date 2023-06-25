@@ -4,12 +4,13 @@ import "./Form.css"
 import { AuthContext } from '../../context/AuthContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 function Forms() {
-    const { isLoading, setIsLoading } = useContext(AuthContext)
+    const { isLoading, setIsLoading, sensor, setSensor } = useContext(AuthContext)
 
     const { user } = useAuthContext()
     console.log(isLoading)
     const sendForm = async (e) => {
         e.preventDefault()
+        setSensor(false)
         setIsLoading(true)
         let name = e.target[0].value
         let qarz = e.target[1].value
@@ -28,6 +29,7 @@ function Forms() {
         }).then(res => console.log(res))
             .catch(() => console.log("error chiqdi"))
         setIsLoading(false)
+        setSensor(true)
     }
 
     return (

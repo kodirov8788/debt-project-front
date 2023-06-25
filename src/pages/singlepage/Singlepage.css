@@ -74,7 +74,7 @@
 
 .single_container {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -85,7 +85,7 @@
     }
 
     .singlepage_topCover input {
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .singlepage_topCover button {
@@ -115,6 +115,6 @@
 
     .singlepage_plus,
     .singlepage_minus {
-        width: 100%;
+        width: 90%;
     }
 }
