@@ -8,14 +8,17 @@ import Signup from './pages/Signup'
 import Main from './pages/Main/Main'
 import Singlepage from './pages/singlepage/Singlepage'
 import Header from './components/header/Header'
+import LoadingSpinner from './components/loaderSpinner/LoaderSpinner'
+import { useContext } from 'react'
+import { AuthContext } from './context/AuthContext'
 
 function App() {
   const { user } = useAuthContext()
-
+  const { isLoading } = useContext(AuthContext)
   return (
     <div className="App">
       <BrowserRouter>
-        {/* <Navbar /> */}
+        <LoadingSpinner boolean={isLoading} />
         <Header />
         <div className="pages">
           <Routes>

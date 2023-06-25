@@ -20,18 +20,20 @@ function Singlepage() {
 
     const [userData, setUserData] = useState([])
     console.log(userData)
-    useEffect(() => {
-        const getApi = async () => {
-            await Axios.get("/client/get", {
-                headers: {
-                    'Authorization': `Bearer ${user?.token}`
-                }
+    const getApi = async () => {
+        setIsLoading(true)
+        await Axios.get("/client/get", {
+            headers: {
+                'Authorization': `Bearer ${user?.token}`
+            }
+        })
+            .then((res) => {
+                setUserData(res.data.find(us => us._id === id))
+                setIsLoading(false)
             })
-                .then((res) => {
-                    setUserData(res.data.find(us => us._id === id))
-                })
-                .catch((error) => console.log("error bor"))
-        }
+            .catch((error) => console.log("error bor"))
+    }
+    useEffect(() => {
         getApi()
     }, [user])
 
@@ -64,7 +66,6 @@ function Singlepage() {
     }
     return (
         <div>
-            <LoadingSpinner boolean={isLoading} />
             <div className="singlepage_top">
                 <div className="singlepage_topCover">
                     <input onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, qarz: Number(e.target.value) })} type="number" placeholder='qarzdan yechish' />

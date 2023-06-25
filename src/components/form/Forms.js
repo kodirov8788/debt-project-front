@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 function Forms() {
     const { isLoading, setIsLoading } = useContext(AuthContext)
+
     const { user } = useAuthContext()
     console.log(isLoading)
     const sendForm = async (e) => {
