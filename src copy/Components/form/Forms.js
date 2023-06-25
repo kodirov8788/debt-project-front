@@ -1,12 +1,9 @@
 import Axios from '../../api/api'
 import React, { useContext } from 'react'
 import "./Form.css"
-import { AuthContext } from '../../context/AuthContext'
-import { useAuthContext } from '../../hooks/useAuthContext'
+import { GlobalState } from '../../context/GlobalState'
 function Forms() {
-    const { isLoading, setIsLoading } = useContext(AuthContext)
-    const { user } = useAuthContext()
-    console.log(isLoading)
+    const { isLoading, setIsLoading } = useContext(GlobalState)
     const sendForm = async (e) => {
         e.preventDefault()
         setIsLoading(true)
@@ -14,16 +11,18 @@ function Forms() {
         let qarz = e.target[1].value
         let info = e.target[2].value
         let number = e.target[3].value
+
+        console.log(name)
+        console.log(qarz)
+        console.log(info)
+        console.log(number)
+
         await Axios.post("/client/create", {
             name,
             qarz,
             info,
             number: Number(number),
             comments: [],
-        }, {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
         }).then(res => console.log(res))
             .catch(() => console.log("error chiqdi"))
         setIsLoading(false)
@@ -34,7 +33,7 @@ function Forms() {
             <div className="textm">
                 <h3>Qarz qo'shish:</h3>
             </div>
-            <div className="inputs">
+            <div className="input">
                 <input type="text" placeholder='Qarzdor ismi' required />
                 <input type="number" placeholder='qancha qarz' required />
                 <input type="text" placeholder='nima oldi?' />

@@ -2,13 +2,11 @@ import React, { useState, useEffect, useContext } from 'react'
 import "./Singlepage.css"
 import Axios from '../../api/api'
 import { useParams } from "react-router-dom"
-import LoadingSpinner from '../../components/loaderSpinner/LoaderSpinner'
-import { AuthContext } from '../../context/AuthContext'
-import { useAuthContext } from '../../hooks/useAuthContext'
+import LoadingSpinner from '../../Components/loaderSpinner/LoaderSpinner'
+import { GlobalState } from '../../context/GlobalState'
 function Singlepage() {
     const { id } = useParams()
-    const { isLoading, setIsLoading } = useContext(AuthContext)
-    const { user } = useAuthContext()
+    const { isLoading, setIsLoading } = useContext(GlobalState)
     const [ayiruvQiymat, setAyiruvQiymat] = useState({
         qarz: 0,
         info: ""
@@ -18,31 +16,23 @@ function Singlepage() {
         info: ""
     })
 
-    const [userData, setUserData] = useState([])
-    console.log(userData)
+    const [user, setUser] = useState([])
+    console.log(user)
     useEffect(() => {
         const getApi = async () => {
-            await Axios.get("/client/get", {
-                headers: {
-                    'Authorization': `Bearer ${user?.token}`
-                }
-            })
+            await Axios.get("/client/get")
                 .then((res) => {
-                    setUserData(res.data.find(us => us._id === id))
+                    setUser(res.data.find(us => us._id === id))
                 })
                 .catch((error) => console.log("error bor"))
         }
         getApi()
-    }, [user])
+    }, [])
 
 
     const ayirish = async () => {
         setIsLoading(true)
-        await Axios.put(`/client/minus/${id}`, ayiruvQiymat, {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        })
+        await Axios.put(`/client/minus/${id}`, ayiruvQiymat)
             .then(res => console.log(res))
             .catch((error) => console.log("error bor", error))
         setIsLoading(false)
@@ -52,11 +42,7 @@ function Singlepage() {
 
     const qoshish = async () => {
         setIsLoading(true)
-        await Axios.put(`/client/plus/${id}`, qoshuvQiymat, {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        })
+        await Axios.put(`/client/plus/${id}`, qoshuvQiymat)
             .then(res => console.log(res))
             .catch((error) => console.log("error bor", error))
         setIsLoading(false)
@@ -80,12 +66,12 @@ function Singlepage() {
 
             <div className="singlepage_main">
                 <div className="singlepage_title">
-                    <h1>Ismi: {userData.name}</h1>
-                    <h1>Umumiy qarzdorlik: {userData.qarz} so`m</h1>
+                    <h1>Ismi: {user.name}</h1>
+                    <h1>Umumiy qarzdorlik: {user.qarz} so`m</h1>
                 </div>
                 <div className="single_container">
                     {
-                        userData.comments?.map(comment => (
+                        user.comments?.map(comment => (
                             <div key={comment._id}>
                                 {comment.operation === "plus" ?
                                     <div className="singlepage_plus">

@@ -2,23 +2,18 @@ import React, { useContext, useEffect, useState } from 'react'
 import "./Userslist.css"
 import Axios from '../../api/api'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../../context/AuthContext'
-import { useAuthContext } from '../../hooks/useAuthContext'
+import { GlobalState } from '../../context/GlobalState'
 
 function Userslist() {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const { setIsLoading: setContextIsLoading } = useContext(AuthContext);
-    const { user } = useAuthContext()
+    const { setIsLoading: setContextIsLoading } = useContext(GlobalState);
+
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const response = await Axios.get('/client/get', {
-                    headers: {
-                        'Authorization': `Bearer ${user.token}`
-                    }
-                });
+                const response = await Axios.get('/client/get');
                 setData(response.data);
             } catch (error) {
                 console.error(error);
@@ -28,17 +23,12 @@ function Userslist() {
         };
 
         fetchData();
-    }, [isLoading, user]);
+    }, [isLoading]);
 
     const deleteUser = async (id) => {
         setContextIsLoading(true);
-
         try {
-            const response = await Axios.delete(`/client/delete/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            });
+            const response = await Axios.delete(`/client/delete/${id}`);
             console.log(response.data); // Assuming the server sends a response with the deleted user information
         } catch (error) {
             console.error(error);
@@ -48,7 +38,6 @@ function Userslist() {
     };
     return (
         <ul className='userlist'>
-            <h1>User lists</h1>
             {
                 data.map(user => (
 
@@ -60,8 +49,7 @@ function Userslist() {
                         </div>
 
                         <div className="list_right">
-                            <Link className='link' to={`/debt/${user._id}`}>Taxrirlash </Link>
-
+                            <Link className='link' to={`/qarzdor/${user._id}`}>Taxrirlash </Link>
                             <a href={`tel:${user.number}`}>tel: {user.number}</a>
                             <button onClick={() => deleteUser(user._id)}>delete</button>
                         </div>
