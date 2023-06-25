@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom'
-import { useLogout } from '../../hooks/useLogout'
-import { useAuthContext } from '../../hooks/useAuthContext'
-import "./Navbar.css"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useLogout } from '../../hooks/useLogout';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import './Navbar.css';
+
 const Navbar = () => {
-  const { logout } = useLogout()
-  const { user } = useAuthContext()
+  const { logout } = useLogout();
+  const { user } = useAuthContext();
 
   const handleClick = () => {
-    logout()
-  }
+    logout();
+  };
 
   return (
     <header>
@@ -17,13 +19,12 @@ const Navbar = () => {
           <h1>Qarz daftari</h1>
         </Link>
         <nav>
-          {!user ? "" : (
+          {user ? (
             <div>
               <span>{user.email}</span>
               <button onClick={handleClick}>Log out</button>
             </div>
-          )}
-          {!user ? "" : (
+          ) : (
             <div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
@@ -32,7 +33,7 @@ const Navbar = () => {
         </nav>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
