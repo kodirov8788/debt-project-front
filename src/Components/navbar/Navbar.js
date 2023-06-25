@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
+// import { useAuthContext } from '../../hooks/useAuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { user, dispatch } = useAuthContext();
+  // const { user, dispatch } = useAuthContext();
 
-  const logout = () => {
-    localStorage.removeItem('user')
-    dispatch({ type: 'LOGOUT' })
-  }
+  // const logout = () => {
+  //   localStorage.removeItem('user')
+  //   dispatch({ type: 'LOGOUT' })
+  // }
 
-  const handleClick = () => {
-    logout();
-  };
+  // const handleClick = () => {
+  //   logout();
+  // };
 
   return (
     <header>
@@ -22,7 +22,7 @@ const Navbar = () => {
           <h1>Qarz daftari</h1>
         </Link>
         <nav>
-          {user ? (
+          {/* {user ? (
             <div>
               <span>{user.email}</span>
               <button onClick={handleClick}>Log out</button>
@@ -32,7 +32,7 @@ const Navbar = () => {
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
             </div>
-          )}
+          )} */}
         </nav>
       </div>
     </header>
