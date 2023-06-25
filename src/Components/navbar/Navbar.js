@@ -17,7 +17,7 @@ const Navbar = () => {
           <h1>Qarz daftari</h1>
         </Link>
         <nav>
-          {user && (
+          {!user ? "" : (
             <div>
               <span>{user.email}</span>
               <button onClick={handleClick}>Log out</button>
