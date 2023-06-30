@@ -35,24 +35,7 @@ function Userslist() {
         fetchData();
     }, [user, sensor]);
 
-    const deleteUser = async (id) => {
-        setContextIsLoading(true);
-        setSensor(false)
-        try {
-            const response = await Axios.delete(`/client/delete/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            });
-            console.log(response.data); // Assuming the server sends a response with the deleted user information
-        } catch (error) {
-            console.error(error);
-            console.log('Error occurred while deleting user');
-        }
-        setContextIsLoading(false);
-        setSensor(true)
 
-    };
 
     return (
         <ul className='userlist'>
@@ -77,7 +60,7 @@ function Userslist() {
                             </Link>
 
                             <a href={`tel:${user.number}`}>tel: {user.number}</a>
-                            <button onClick={() => deleteUser(user._id)}>delete</button>
+
                         </div>
                     </li>
                 ))

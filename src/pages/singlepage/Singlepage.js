@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import "./Singlepage.css"
 import Axios from '../../api/api'
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import LoadingSpinner from '../../components/loaderSpinner/LoaderSpinner'
 import { AuthContext } from '../../context/AuthContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 function Singlepage() {
     const { id } = useParams()
+    const navigate = useNavigate()
     const { isLoading, setIsLoading, sensor, setSensor } = useContext(AuthContext)
     const { user } = useAuthContext()
     const [ayiruvQiymat, setAyiruvQiymat] = useState({
@@ -72,6 +73,24 @@ function Singlepage() {
         setQoshuvQiymat({ ...qoshuvQiymat, qarz: "", info: "" })
         setAyiruvQiymat({ ...qoshuvQiymat, qarz: "", info: "" })
     }
+    const deleteUser = async (id) => {
+        setIsLoading(true);
+        setSensor(false)
+        try {
+            const response = await Axios.delete(`/client/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            });
+            console.log(response.data); // Assuming the server sends a response with the deleted user information
+        } catch (error) {
+            console.error(error);
+            console.log('Error occurred while deleting user');
+        }
+        setIsLoading(false);
+        setSensor(true)
+        navigate("/")
+    };
     return (
         <div>
             <div className="singlepage_top">
@@ -97,6 +116,7 @@ function Singlepage() {
                 <div className="singlepage_title">
                     <h1>Ismi: <span> {userData.name}</span></h1>
                     <h1>Umumiy qarzdorlik: <span>{userData.qarz}</span>  so`m</h1>
+                    <button onClick={() => deleteUser(userData._id)}>delete</button>
                 </div>
                 <div className="single_container">
                     {

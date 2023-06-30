@@ -2,9 +2,10 @@ import { useContext, useState } from "react"
 import { useSignup } from "../hooks/useSignup"
 import { AuthContext } from "../context/AuthContext"
 import { useAuthContext } from "../hooks/useAuthContext"
+import { useNavigate } from "react-router-dom"
 
 const Signup = () => {
-
+  const navigate = useNavigate()
   const { isLoading, setIsLoading, sensor, setSensor } = useContext(AuthContext)
 
   const { user } = useAuthContext()
@@ -17,6 +18,7 @@ const Signup = () => {
     e.preventDefault()
 
     await signup(email, password)
+    navigate("/login")
   }
 
   return (

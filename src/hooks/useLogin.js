@@ -39,7 +39,7 @@ export const useLogin = () => {
       }
     } catch (error) {
       setIsLoading(false);
-      setError('An error occurred during login.');
+      setError('Sizga saytga kirish uchun hali ruxsat yo`q');
     }
   };
 

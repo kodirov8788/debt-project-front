@@ -17,6 +17,7 @@ import Singleuser from './pages/singleuser/Singleuser'
 function App() {
   const { user } = useAuthContext()
   const { isLoading } = useContext(AuthContext)
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -35,19 +36,19 @@ function App() {
             />
             <Route
               path="/admin"
-              element={<Admin />}
+              element={user ? <Admin /> : <Navigate to="/login" />}
             />
             <Route
               path="/signup"
-              element={<Signup />}
+              element={user ? <Signup /> : <Navigate to="/login" />}
             />
             <Route
               path="/debt/:id"
-              element={<Singlepage />}
+              element={user ? <Singlepage /> : <Navigate to="/login" />}
             />
             <Route
               path="/singleuser/:id"
-              element={<Singleuser />}
+              element={user ? <Singleuser /> : <Navigate to="/login" />}
             />
           </Routes>
         </div>
