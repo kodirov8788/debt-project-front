@@ -95,8 +95,8 @@ function Singlepage() {
 
             <div className="singlepage_main">
                 <div className="singlepage_title">
-                    <h1>Ismi: {userData.name}</h1>
-                    <h1>Umumiy qarzdorlik: {userData.qarz} so`m</h1>
+                    <h1>Ismi: <span> {userData.name}</span></h1>
+                    <h1>Umumiy qarzdorlik: <span>{userData.qarz}</span>  so`m</h1>
                 </div>
                 <div className="single_container">
                     {
@@ -104,14 +104,14 @@ function Singlepage() {
                             <div key={comment._id}>
                                 {comment.operation === "plus" ?
                                     <div className="singlepage_plus">
-                                        <h2>Qo`shilgan miqdor:{comment.amount}so`m</h2>
+                                        <h2>Qo`shilgan miqdor: <span>{comment.amount}</span> so`m</h2>
 
                                         <p>{comment.info}</p>
                                         <span>{(new Date((comment.updatedAt)).toDateString()) + " " + (new Date((comment.updatedAt)).toLocaleTimeString())}</span>
                                     </div>
                                     :
                                     <div className="singlepage_minus">
-                                        <h2>ayirilgan miqdor:{comment.amount}so`m</h2>
+                                        <h2>ayirilgan miqdor: <span>{comment.amount} </span> so`m</h2>
 
                                         <p>{comment.info}</p>
                                         <span>{(new Date((comment.updatedAt)).toDateString()) + " " + (new Date((comment.updatedAt)).toLocaleTimeString())}</span>

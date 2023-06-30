@@ -11,6 +11,8 @@ import Header from './components/header/Header'
 import LoadingSpinner from './components/loaderSpinner/LoaderSpinner'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
+import Admin from './pages/admin/Admin'
+import Singleuser from './pages/singleuser/Singleuser'
 
 function App() {
   const { user } = useAuthContext()
@@ -32,12 +34,20 @@ function App() {
               element={!user ? <Login /> : <Navigate to="/" />}
             />
             <Route
+              path="/admin"
+              element={<Admin />}
+            />
+            <Route
               path="/signup"
-              element={!user ? <Signup /> : <Navigate to="/" />}
+              element={<Signup />}
             />
             <Route
               path="/debt/:id"
               element={<Singlepage />}
+            />
+            <Route
+              path="/singleuser/:id"
+              element={<Singleuser />}
             />
           </Routes>
         </div>

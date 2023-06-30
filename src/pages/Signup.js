@@ -1,10 +1,16 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useSignup } from "../hooks/useSignup"
+import { AuthContext } from "../context/AuthContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const Signup = () => {
+
+  const { isLoading, setIsLoading, sensor, setSensor } = useContext(AuthContext)
+
+  const { user } = useAuthContext()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { signup, error, isLoading } = useSignup()
+  const { signup, error } = useSignup()
 
 
   const handleSubmit = async (e) => {
