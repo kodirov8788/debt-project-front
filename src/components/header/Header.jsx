@@ -24,6 +24,7 @@ const Header = () => {
                 <nav>
                     {user?.role === "root" ?
                         <div className='admin_link'>
+                            <Link to="/archives">archives</Link>
                             <Link to="/admin">admin</Link>
 
                         </div>

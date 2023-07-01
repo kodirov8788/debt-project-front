@@ -13,6 +13,7 @@ import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 import Admin from './pages/admin/Admin'
 import Singleuser from './pages/singleuser/Singleuser'
+import Archives from './pages/archives/Archives'
 
 function App() {
   const { user } = useAuthContext()
@@ -37,6 +38,10 @@ function App() {
             <Route
               path="/admin"
               element={user ? <Admin /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/archives"
+              element={user ? <Archives /> : <Navigate to="/login" />}
             />
             <Route
               path="/signup"
