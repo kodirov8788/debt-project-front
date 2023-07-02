@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
 import "./Singlepage.css"
 import Axios from '../../api/api'
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import LoadingSpinner from '../../components/loaderSpinner/LoaderSpinner'
 import { AuthContext } from '../../context/AuthContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 function Singlepage() {
     const { id } = useParams()
+    const [data, setData] = useState([]);
     const { isLoading, setIsLoading, sensor, setSensor } = useContext(AuthContext)
+    const { setIsLoading: setContextIsLoading } = useContext(AuthContext);
     const { user } = useAuthContext()
     const [ayiruvQiymat, setAyiruvQiymat] = useState({
         qarz: 0,
@@ -72,22 +74,49 @@ function Singlepage() {
         setQoshuvQiymat({ ...qoshuvQiymat, qarz: "", info: "" })
         setAyiruvQiymat({ ...qoshuvQiymat, qarz: "", info: "" })
     }
+
+    const deleteUser = async (id) => {
+        setContextIsLoading(true);
+        setSensor(false)
+        try {
+            const response = await Axios.delete(`/client/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            });
+            console.log(response.data); // Assuming the server sends a response with the deleted user information
+        } catch (error) {
+            console.error(error);
+            console.log('Error occurred while deleting user');
+        }
+        setContextIsLoading(false);
+        setSensor(true)
+
+    };
     return (
         <div>
+            <div className="deleteuser">
+                <div className="logoutl">
+                    <Link to={"/"} className='' style={{ color: "black", fontSize: "20px", textDecoration: "none" }}>Ortga qaytish</Link>
+                </div>
+                <div className="">
+                    <button onClick={() => deleteUser(user._id)}>Qarzdorni o'chirish</button>
+                </div>
+            </div>
             <div className="singlepage_top">
                 <div className="singlepage_topCover">
-                    <input onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, qarz: Number(e.target.value) })} type="number" value={ayiruvQiymat.qarz < 1 ? "" : ayiruvQiymat.qarz} placeholder='qarzdan yechish' />
+                    <input onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, qarz: Number(e.target.value) })} type="number" value={ayiruvQiymat.qarz < 1 ? "" : ayiruvQiymat.qarz} placeholder='Qarzdan yechish' />
 
-                    <input type="text" placeholder='nima oldi?' onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, info: e.target.value })} value={ayiruvQiymat.info.length < 1 ? "" : ayiruvQiymat.info} />
+                    <input type="text" placeholder='Nima oldi?' onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, info: e.target.value })} value={ayiruvQiymat.info.length < 1 ? "" : ayiruvQiymat.info} />
 
                     <button onClick={ayirish}>Qarzni yechish</button>
 
                 </div>
                 <div className="singlepage_topCover">
 
-                    <input onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, qarz: Number(e.target.value) })} type="number" value={qoshuvQiymat.qarz < 1 ? "" : qoshuvQiymat.qarz} placeholder='qarzga qo`shish' />
+                    <input onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, qarz: Number(e.target.value) })} type="number" value={qoshuvQiymat.qarz < 1 ? "" : qoshuvQiymat.qarz} placeholder='Qarzga qo`shish' />
 
-                    <input type="text" placeholder='nima oldi?' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, info: e.target.value })} value={qoshuvQiymat.info.length < 1 ? "" : qoshuvQiymat.info} />
+                    <input type="text" placeholder='Nima oldi?' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, info: e.target.value })} value={qoshuvQiymat.info.length < 1 ? "" : qoshuvQiymat.info} />
 
                     <button onClick={qoshish}>Qarz qo`shish</button>
                 </div>
@@ -95,8 +124,8 @@ function Singlepage() {
 
             <div className="singlepage_main">
                 <div className="singlepage_title">
-                    <h1>Ismi: <span> {userData.name}</span></h1>
-                    <h1>Umumiy qarzdorlik: <span>{userData.qarz}</span>  so`m</h1>
+                    <h1>Qarzdor ismi: <span style={{ color: "black" }}> {userData.name}</span></h1>
+                    <h1>Umumiy qarzdorlik: <span style={{ color: "red" }}>{userData.qarz}</span>  so`m</h1>
                 </div>
                 <div className="single_container">
                     {
@@ -111,7 +140,7 @@ function Singlepage() {
                                     </div>
                                     :
                                     <div className="singlepage_minus">
-                                        <h2>ayirilgan miqdor: <span>{comment.amount} </span> so`m</h2>
+                                        <h2>Ayirilgan miqdor: <span>{comment.amount} </span> so`m</h2>
 
                                         <p>{comment.info}</p>
                                         <span>{(new Date((comment.updatedAt)).toDateString()) + " " + (new Date((comment.updatedAt)).toLocaleTimeString())}</span>

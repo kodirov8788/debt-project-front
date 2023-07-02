@@ -44,9 +44,9 @@ function Forms() {
             </div>
             <div className="inputs">
                 <input type="text" placeholder='Qarzdor ismi' required />
-                <input type="number" placeholder='qancha qarz' required />
-                <input type="text" placeholder='nima oldi?' />
-                <input type="number" placeholder='tel raqam' />
+                <input type="number" placeholder='Qancha qarzi bor' required />
+                <input type="text" placeholder='Nima oldi?' />
+                <input type="number" placeholder='Telefon raqami' />
 
             </div>
             <div className="btn">

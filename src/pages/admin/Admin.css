@@ -1,0 +1,52 @@
+.adminlink a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.1s;
+}
+.adminlink a:hover {
+    text-decoration: underline;
+    color: blue;
+}
+.admin_title h1 {
+    text-align: center;
+    margin-top: -30px;
+    margin-bottom: 50px;
+}
+.useritem {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* border: 1px solid red; */
+    grid-column-gap: 40px;
+    grid-row-gap: 40px;
+    padding: 10px;
+}
+.useritems {
+    border: 2px solid blue;
+    border-radius: 10px;
+    padding: 10px;
+    padding: 0 20px;
+}
+@media screen and (max-width: 400px) {
+    .admin_title {
+        margin: 0;
+        margin-top: 50px;
+    }
+    .useritem {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 350px;
+        margin-top: -20px;
+        grid-row-gap: 20px;
+    }
+    .useritem h1 {
+        /* border: 1px solid red; */
+        font-size: 22px;
+    }
+    .linksss {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

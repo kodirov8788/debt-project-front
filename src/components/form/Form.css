@@ -1,13 +1,18 @@
 .form {
     height: 10%;
+    width: 100%;
     /* border: 1px solid red; */
     display: flex;
     align-items: center;
+    margin-bottom: 50px;
     justify-content: space-around;
 }
-
+.textm h3 {
+    font-size: 26px;
+}
 .inputs {
     display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .inputs input {
@@ -18,6 +23,14 @@
     font-size: 20px;
     display: flex;
     margin-top: 3px;
+    border-radius: 4px;
+    font-style: oblique;
+    border: 2px solid grey;
+}
+.inputs input:focus {
+    outline: none;
+    color: green;
+    border: 2px solid green;
 }
 
 .btn button {
@@ -35,10 +48,28 @@
 
 .btn button:hover {
     border-radius: 0% 25% 0% 25%;
+    opacity: 0.9;
 }
 
-@media screen and (max-width:500px) {
-    .form {
+@media screen and (max-width: 400px) {
+    form {
+        /* border: 2px solid red; */
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    .form .inputs {
+        display: flex;
+        flex-direction: column;
+    }
+    .inputs input {
+        margin: 10px 0;
+    }
+    .btn button {
+        margin: 10px 0;
+        margin-bottom: 30px;
+    }
+    /* .form {
         height: auto;
         display: flex;
         align-items: center;
@@ -60,5 +91,5 @@
 
     .btn {
         margin-top: 10px;
-    }
+    } */
 }

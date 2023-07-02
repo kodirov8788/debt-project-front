@@ -22,7 +22,7 @@ function ListItems({ userlist }) {
 
     }
     return (
-        <li>
+        <li className='linksss'>
             <Link to={`/singleuser/${userlist._id}`}>
                 <h1>{userlist.email}</h1>
             </Link>

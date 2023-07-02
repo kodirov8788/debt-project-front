@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import "./Admin.js"
+import "./Admin.css"
 import axios from '../../api/api.js';
 import { AuthContext } from '../../context/AuthContext.js';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
@@ -32,10 +32,21 @@ function Admin() {
     }, [user]);
     return (
         <div>
-            <h1>Admin page</h1>
+            <div className="adminlink">
+                <Link to={"/"}>Ortga qaytish</Link>
+            </div>
+            <div className="admin_title">
+                <h1>Admin page</h1>
+            </div>
             {data.length < 1 ? <h1>Loading...</h1> :
-                <div>
-                    {data.map(useritem => <ListItems userlist={useritem} />)}
+                <div className='useritem'>
+                    {
+                        data.map(useritem =>
+                            <div className="useritems">
+                                <ListItems userlist={useritem} />
+                            </div>
+                        )
+                    }
                 </div>
             }
         </div>

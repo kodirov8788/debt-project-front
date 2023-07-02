@@ -56,7 +56,7 @@ function Userslist() {
 
     return (
         <ul className='userlist'>
-            <h1>User lists</h1>
+            <h1 className='usertext'>Qarzdorlar ro'yhati:</h1>
             {data.length === 0 ? (
                 <h1>loading...</h1>
             ) : (
@@ -64,10 +64,14 @@ function Userslist() {
                     <li key={user._id}>
                         <div className='list_left'>
                             <span>
-                                ismi: <b>{user.name}</b>
+                                Qarzdor ismi: <b style={{ fontStyle: "italic" }}>{user.name}</b>
                             </span>
                             <span>
-                                qolgan qarzi: <b style={{ color: 'red' }}>{user.qarz}</b>
+                                Qolgan qarzi: <b style={{ color: "red", fontStyle: "italic" }}>{user.qarz}</b>
+                            </span>
+                            <span>Nima olgan: <b>{user.info}</b></span>
+                            <span className=''>
+                                <a href={`tel:${user.number}`} style={{ color: "black", textDecoration: "none" }}>Telefon raqami: <b className='tel' style={{ fontStyle: "italic" }}>{user.number}</b></a>
                             </span>
                         </div>
 
@@ -76,8 +80,7 @@ function Userslist() {
                                 Taxrirlash
                             </Link>
 
-                            <a href={`tel:${user.number}`}>tel: {user.number}</a>
-                            <button onClick={() => deleteUser(user._id)}>delete</button>
+                            {/* <button onClick={() => deleteUser(user._id)}>delete</button> */}
                         </div>
                     </li>
                 ))

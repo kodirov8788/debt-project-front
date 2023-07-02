@@ -24,13 +24,13 @@ const Header = () => {
                 <nav>
                     {user?.role === "root" ?
                         <div className='admin_link'>
-                            <Link to="/admin">admin</Link>
+                            <Link to="/admin">Admin</Link>
 
                         </div>
                         : ""
                     }
                     {user ? (
-                        <div>
+                        <div className='btnlinks'>
                             <span>{user.email}</span>
                             <Link to="/signup">Signup</Link>
                             <button onClick={handleClick}>Log out</button>

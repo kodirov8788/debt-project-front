@@ -1,3 +1,19 @@
 .admin_link {
     margin-right: 10px;
 }
+.admin_link a:hover {
+    text-decoration: underline;
+}
+.btnlinks button {
+    border: 2px solid green;
+    border-radius: 4px;
+    color: white;
+    background: green;
+    transition: all 1s;
+}
+.btnlinks button:hover {
+    border: 2px solid green;
+    color: green;
+    background: none;
+    opacity: 0.9;
+}
